@@ -1,41 +1,54 @@
 package Praktikum3.Soal2;
 import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Pilih jenis hewan yang ingin diinputkan: ");
-        System.out.println("1. Kucing");
-        System.out.println("2. Anjing");
-        System.out.print("Masukkan pilihan: ");
-        int choice = input.nextInt();
-        input.nextLine();
+        HashMap<Integer, String> monthMap = new HashMap<>();
+        monthMap.put(1, "Januari");
+        monthMap.put(2, "Februari");
+        monthMap.put(3, "Maret");
+        monthMap.put(4, "April");
+        monthMap.put(5, "Mei");
+        monthMap.put(6, "Juni");
+        monthMap.put(7, "Juli");
+        monthMap.put(8, "Agustus");
+        monthMap.put(9, "September");
+        monthMap.put(10, "Oktober");
+        monthMap.put(11, "November");
+        monthMap.put(12, "Desember");
 
-        if (choice == 1){
-            System.out.print("Nama hewan peliharaan: ");
-            String name = input.nextLine();
-            System.out.print("Ras: ");
-            String race = input.nextLine();
-            System.out.print("Warna bulu: ");
-            String furColor = input.nextLine();
-            Cat cat = new Cat(name, race, furColor);
-            cat.displayCatDetail();
+        LinkedList<Country> countryList = new LinkedList<>();
+        Scanner scanner = new Scanner(System.in);
+        int numberOfCountries = Integer.parseInt(scanner.nextLine());
 
-        } else if (choice == 2){
-            System.out.print("Nama hewan peliharaan: ");
-            String name = input.nextLine();
-            System.out.print("Ras: ");
-            String race = input.nextLine();
-            System.out.print("Warna bulu: ");
-            String furColor = input.nextLine();
-            System.out.print("Kemampuan: ");
-            String ability = input.nextLine();
-            Dog dog = new Dog(name, race, furColor, ability);
-            dog.displayDogDetail();
+        for (int i = 0; i < numberOfCountries; i++) {
+            String name = scanner.nextLine();
+            String leadershipType = scanner.nextLine();
+            String leaderName = scanner.nextLine();
+            Country newCountry;
 
-        } else {
-            System.out.println("Pilihan tidak valid");
+            if (leadershipType.equalsIgnoreCase("monarki")) {
+                newCountry = new Country(name, leadershipType, leaderName);
+            } else {
+                int day = Integer.parseInt(scanner.nextLine());
+                int month = Integer.parseInt(scanner.nextLine());
+                int year = Integer.parseInt(scanner.nextLine());
+                newCountry = new Country(name, leadershipType, leaderName, day, month, year);
+            }
+            countryList.add(newCountry);
         }
-        input.close();
+
+        System.out.println();
+        for (int i = 0; i < countryList.size(); i++) {
+            Country country = countryList.get(i);
+            country.displayInfo(monthMap);
+            if (i < countryList.size() - 1) {
+                System.out.println();
+            }
+        }
+
+        scanner.close();
     }
 }
